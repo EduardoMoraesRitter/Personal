@@ -1,238 +1,284 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" data-theme="dark" data-lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eduardo | Portfolio</title>
+    <title>Eduardo Ritter — Developer & Creative</title>
 
-    <!-- Google Fonts -->
+    <!-- Apply theme before render — no flash -->
+    <script>
+        (function () {
+            var s = localStorage.getItem('theme');
+            var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', s || (d ? 'dark' : 'light'));
+        })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="logo">Eduardo<span class="dot">.</span></div>
-        <ul class="nav-links">
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#about">Sobre</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projetos</a></li>
-            <li><a href="#contact">Contato</a></li>
-        </ul>
-        <div class="hamburger">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </div>
-    </nav>
+    <!-- ── Scroll progress line ─────────────────────────── -->
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-    <!-- Hero Section -->
-    <section id="hero">
-        <div class="hero-content">
-            <h3 class="greeting">Olá, eu sou</h3>
-            <h1 class="name">Eduardo</h1>
-            <h2 class="role">Eu sou <span class="typing-text"></span></h2>
-            <p class="description">
-                Desenvolvedor apaixonado por criar experiências digitais modernas e funcionais.
-                Transformo ideias em realidade através do código.
-            </p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">Ver Projetos</a>
-                <a href="#contact" class="btn btn-outline">Fale Comigo</a>
+    <!-- ── Custom cursor ────────────────────────────────── -->
+    <div class="cursor-dot"  id="cursorDot"  aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════════════
+         HEADER
+         ══════════════════════════════════════════════════ -->
+    <header id="header">
+        <nav class="nav">
+
+            <a href="#hero" class="nav-logo">Eduardo Ritter</a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero"     data-i18n="nav.home">Início</a></li>
+                <li><a href="#about"    data-i18n="nav.about">Sobre</a></li>
+                <li><a href="#services" data-i18n="nav.services">Serviços</a></li>
+                <li><a href="#contact"  data-i18n="nav.contact">Contato</a></li>
+            </ul>
+
+            <div class="nav-controls">
+                <button class="btn-control btn-lang" id="langToggle" aria-label="Toggle language">
+                    <span id="langLabel">EN</span>
+                </button>
+                <button class="btn-control btn-theme" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="4.5"/>
+                        <line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/>
+                        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+                        <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
             </div>
 
-            <div class="social-icons">
-                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-        <div class="scroll-down">
-            <a href="#about">
-                <i class="fas fa-chevron-down"></i>
-            </a>
-        </div>
-    </section>
+            <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span>
+            </button>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">Sobre Mim</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <!-- Placeholder for user image. I will generate a placeholder avatar -->
-                    <img src="profile_placeholder.png" alt="Eduardo Profile">
+        </nav>
+    </header>
+
+    <!-- ══════════════════════════════════════════════════
+         MAIN
+         ══════════════════════════════════════════════════ -->
+    <main>
+
+        <!-- ── 00 HERO ──────────────────────────────────── -->
+        <section id="hero" class="hero">
+
+            <div class="container">
+                <div class="hero-inner">
+
+                    <div class="hero-meta">
+                        <span class="label" data-i18n="hero.tag">Desenvolvedor &amp; Criativo</span>
+                        <span class="label">2026</span>
+                    </div>
+
+                    <!-- Headline split into lines for parallax -->
+                    <h1 class="hero-headline" id="heroHeadline">
+                        <span class="headline-line" data-parallax="0.12">Eduardo</span>
+                        <span class="headline-line" data-parallax="0.18">Ritter</span>
+                    </h1>
+
+                    <div class="hero-bottom">
+                        <p class="hero-sub" data-i18n="hero.sub">
+                            Criando experiências digitais<br>modernas e impactantes.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#contact" class="btn-outline" data-i18n="hero.cta">Vamos Conversar</a>
+                            <div class="scroll-hint" id="scrollHint">
+                                <span class="label" data-i18n="hero.scroll">Rolar</span>
+                                <div class="scroll-line"><div class="scroll-line-inner"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="about-text">
-                    <h3>Quem sou eu?</h3>
-                    <p>
-                        Sou um desenvolvedor apaixonado por tecnologia e inovação. Com foco em desenvolvimento web,
-                        busco sempre criar soluções que não apenas funcionem, mas que também encantem os usuários.
+            </div>
+
+        </section>
+
+        <!-- ── 01 ABOUT ─────────────────────────────────── -->
+        <section id="about" class="section reveal-section">
+            <div class="container">
+
+                <header class="section-header">
+                    <span class="section-index">01</span>
+                    <h2 data-i18n="about.title">Sobre Mim</h2>
+                </header>
+
+                <div class="about-layout">
+
+                    <!-- Large editorial statement -->
+                    <p class="about-statement" data-split-text data-i18n="about.statement">
+                        Transformo ideias em interfaces <em>precisas</em>, <em>intencionais</em> e <em>premium</em>.
                     </p>
-                    <p>
-                        Minha jornada na programação começou com a curiosidade de entender como as coisas funcionam na
-                        web.
-                        Desde então, tenho me dedicado a aprender novas tecnologias e aprimorar minhas habilidades em
-                        HTML, CSS, JavaScript e frameworks modernos.
-                    </p>
-                    <div class="about-details">
-                        <div class="detail-item">
-                            <i class="fas fa-code"></i>
-                            <span>Desenvolvedor Full Stack</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-laptop-code"></i>
-                            <span>Freelancer</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-rocket"></i>
-                            <span>Entusiasta de IA</span>
+
+                    <!-- Detail column -->
+                    <div class="about-detail">
+                        <p class="about-bio reveal-item" data-i18n="about.bio">
+                            Sou um desenvolvedor apaixonado por criar interfaces limpas e com visual premium. Foco sempre na melhor experiência para o usuário — cada detalhe importa.
+                        </p>
+
+                        <div class="about-stats">
+                            <div class="stat reveal-item" style="--delay: 0.1s">
+                                <strong class="stat-num" data-counter data-value="3" data-suffix="+">0+</strong>
+                                <span class="stat-label" data-i18n="about.stat1">Anos de Experiência</span>
+                            </div>
+                            <div class="stat reveal-item" style="--delay: 0.2s">
+                                <strong class="stat-num" data-counter data-value="20" data-suffix="+">0+</strong>
+                                <span class="stat-label" data-i18n="about.stat2">Projetos Entregues</span>
+                            </div>
+                            <div class="stat reveal-item" style="--delay: 0.3s">
+                                <strong class="stat-num" data-counter data-value="100" data-suffix="%">0%</strong>
+                                <span class="stat-label" data-i18n="about.stat3">Dedicação</span>
+                            </div>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-primary">Download CV</a>
+
                 </div>
+
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skills Section -->
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Minhas Habilidades</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <i class="fab fa-html5"></i>
-                    <h3>HTML5</h3>
-                    <p>Estruturação semântica e moderna.</p>
+        <!-- ── 02 SERVICES ──────────────────────────────── -->
+        <section id="services" class="section reveal-section">
+            <div class="container">
+
+                <header class="section-header">
+                    <span class="section-index">02</span>
+                    <h2 data-i18n="services.title">Serviços</h2>
+                </header>
+
+                <div class="services-list">
+
+                    <div class="service-item reveal-item" style="--delay: 0s">
+                        <span class="service-num label">01</span>
+                        <div class="service-content">
+                            <h3 data-i18n="services.item1.title">Design &amp; UI</h3>
+                            <p data-i18n="services.item1.text">Interfaces modernas, responsivas e com atenção precisa aos detalhes visuais.</p>
+                        </div>
+                        <span class="service-arrow" aria-hidden="true">↗</span>
+                    </div>
+
+                    <div class="service-item reveal-item" style="--delay: 0.08s">
+                        <span class="service-num label">02</span>
+                        <div class="service-content">
+                            <h3 data-i18n="services.item2.title">Desenvolvimento</h3>
+                            <p data-i18n="services.item2.text">HTML5, CSS3, JavaScript — código limpo, performático e bem estruturado.</p>
+                        </div>
+                        <span class="service-arrow" aria-hidden="true">↗</span>
+                    </div>
+
+                    <div class="service-item reveal-item" style="--delay: 0.16s">
+                        <span class="service-num label">03</span>
+                        <div class="service-content">
+                            <h3 data-i18n="services.item3.title">Soluções Digitais</h3>
+                            <p data-i18n="services.item3.text">Tecnologia eficiente focada em resolver problemas reais com precisão.</p>
+                        </div>
+                        <span class="service-arrow" aria-hidden="true">↗</span>
+                    </div>
+
                 </div>
-                <div class="skill-card">
-                    <i class="fab fa-css3-alt"></i>
-                    <h3>CSS3</h3>
-                    <p>Layouts responsivos e animações.</p>
+
+                <!-- Tech stack marquee -->
+                <div class="stack-marquee">
+                    <div class="marquee-track" aria-hidden="true">
+                        <!-- First set -->
+                        <span>HTML5</span><span class="sep">·</span>
+                        <span>CSS3</span><span class="sep">·</span>
+                        <span>JavaScript</span><span class="sep">·</span>
+                        <span>TypeScript</span><span class="sep">·</span>
+                        <span>React</span><span class="sep">·</span>
+                        <span>Figma</span><span class="sep">·</span>
+                        <span>Git</span><span class="sep">·</span>
+                        <span>Node.js</span><span class="sep">·</span>
+                        <span>Tailwind</span><span class="sep">·</span>
+                        <span>Next.js</span><span class="sep">·</span>
+                        <span>Vite</span><span class="sep">·</span>
+                        <span>VS Code</span><span class="sep">·</span>
+                        <!-- Duplicate set for seamless loop -->
+                        <span>HTML5</span><span class="sep">·</span>
+                        <span>CSS3</span><span class="sep">·</span>
+                        <span>JavaScript</span><span class="sep">·</span>
+                        <span>TypeScript</span><span class="sep">·</span>
+                        <span>React</span><span class="sep">·</span>
+                        <span>Figma</span><span class="sep">·</span>
+                        <span>Git</span><span class="sep">·</span>
+                        <span>Node.js</span><span class="sep">·</span>
+                        <span>Tailwind</span><span class="sep">·</span>
+                        <span>Next.js</span><span class="sep">·</span>
+                        <span>Vite</span><span class="sep">·</span>
+                        <span>VS Code</span><span class="sep">·</span>
+                    </div>
                 </div>
-                <div class="skill-card">
-                    <i class="fab fa-js"></i>
-                    <h3>JavaScript</h3>
-                    <p>Interatividade e lógica dinâmica.</p>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-react"></i>
-                    <h3>React</h3>
-                    <p>Construção de SPAs complexas.</p>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-node-js"></i>
-                    <h3>Node.js</h3>
-                    <p>Desenvolvimento Backend escalável.</p>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-database"></i>
-                    <h3>SQL / NoSQL</h3>
-                    <p>Gerenciamento de dados eficiente.</p>
-                </div>
+
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Meus Projetos</h2>
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project1_placeholder.png" alt="Project 1">
-                        <div class="project-overlay">
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        </div>
+        <!-- ── 03 CONTACT (inverted) ─────────────────────── -->
+        <section id="contact" class="section section-inverted reveal-section">
+            <div class="container">
+
+                <header class="section-header">
+                    <span class="section-index">03</span>
+                    <h2 data-i18n="contact.title">Entre em Contato</h2>
+                </header>
+
+                <div class="contact-layout">
+
+                    <h3 class="contact-headline" data-split-text data-i18n="contact.headline">
+                        Vamos construir<br>algo excepcional.
+                    </h3>
+
+                    <div class="contact-right">
+                        <p class="contact-sub reveal-item" data-i18n="contact.sub">
+                            Disponível para novos projetos.
+                        </p>
+
+                        <a href="mailto:contato@eduardoritter.com" class="contact-email reveal-item" style="--delay: 0.1s">
+                            contato@eduardoritter.com
+                        </a>
+
+                        <nav class="contact-links reveal-item" style="--delay: 0.2s" aria-label="Social links">
+                            <a href="#" class="contact-link">
+                                LinkedIn <span class="arrow" aria-hidden="true">↗</span>
+                            </a>
+                            <a href="#" class="contact-link">
+                                GitHub <span class="arrow" aria-hidden="true">↗</span>
+                            </a>
+                        </nav>
                     </div>
-                    <div class="project-info">
-                        <h3>E-commerce Moderno</h3>
-                        <p>Plataforma de vendas completa com carrinho e pagamentos.</p>
-                        <div class="tech-stack">
-                            <span>React</span>
-                            <span>Node.js</span>
-                        </div>
-                    </div>
+
                 </div>
 
-                <!-- Project 2 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project2_placeholder.png" alt="Project 2">
-                        <div class="project-overlay">
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Dashboard Analytics</h3>
-                        <p>Painel administrativo para visualização de dados em tempo real.</p>
-                        <div class="tech-stack">
-                            <span>Vue.js</span>
-                            <span>Firebase</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project3_placeholder.png" alt="Project 3">
-                        <div class="project-overlay">
-                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>App de Tarefas</h3>
-                        <p>Aplicação de produtividade com recursos de drag-and-drop.</p>
-                        <div class="tech-stack">
-                            <span>JavaScript</span>
-                            <span>LocalStorage</span>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
-    </section>
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Entre em Contato</h2>
-            <div class="contact-content">
-                <p>Estou sempre aberto a novas oportunidades e projetos. <br> Sinta-se à vontade para me mandar uma
-                    mensagem!</p>
-                <a href="mailto:eduardo@email.com" class="btn btn-primary">Enviar Email</a>
+        </section>
 
-                <div class="footer-socials">
-                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Eduardo. Todos os direitos reservados.</p>
+    <!-- ══════════════════════════════════════════════════
+         FOOTER
+         ══════════════════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span class="footer-mark">ER</span>
+            <span class="footer-copy" data-i18n="footer.text">&copy; 2026 — Todos os direitos reservados.</span>
+        </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
-
 </html>
