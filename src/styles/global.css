@@ -248,8 +248,7 @@ body::before {
 
 header {
     position: fixed;
-    top: 1px;
-    /* sits below scroll progress bar */
+    top: 0;
     width: 100%;
     z-index: 1000;
     background: color-mix(in srgb, var(--bg) 82%, transparent);
@@ -381,29 +380,35 @@ header {
 .nav-hamburger {
     display: none;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 6px;
-    padding: 4px;
-    background: none;
+    width: 40px;
+    height: 40px;
+    background: transparent;
     border: none;
     cursor: pointer;
     flex-shrink: 0;
-    z-index: 1001;
+    z-index: 1100; /* Above the drawer links */
+    padding: 0;
+    position: relative;
 }
 
 .nav-hamburger span {
     display: block;
-    width: 20px;
-    height: 1px;
+    width: 24px;
+    height: 1.5px;
     background: var(--text-1);
-    transition: transform 0.3s var(--ease), opacity 0.3s;
+    transition: transform 0.5s var(--ease), opacity 0.3s var(--ease), background-color 0.5s var(--ease);
+    transform-origin: center;
 }
 
 .nav-hamburger.is-open span:nth-child(1) {
-    transform: rotate(45deg) translate(4px, 4px);
+    transform: translateY(4px) rotate(45deg);
 }
 
 .nav-hamburger.is-open span:nth-child(2) {
-    opacity: 0;
+    transform: translateY(-3.5px) rotate(-45deg);
 }
 
 
@@ -977,28 +982,56 @@ header {
     /* Mobile nav drawer */
     .nav-links {
         position: fixed;
-        inset: 0 0 0 20%;
-        background: color-mix(in srgb, var(--bg) 95%, transparent);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-left: 1px solid var(--border);
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--bg); /* Ensure this is opaque */
+        display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         gap: 32px;
-        padding: var(--gutter);
-        transform: translateX(100%);
-        transition: transform 0.45s var(--ease);
-        z-index: 1000;
-        box-shadow: -10px 0 50px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        transform: translateY(-100%);
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 1050;
+        visibility: hidden;
+        pointer-events: none;
     }
 
+    /* Force opaque background in both themes */
+    [data-theme="dark"] .nav-links { background-color: #090909; }
+    [data-theme="light"] .nav-links { background-color: #f9f9f7; }
+
     .nav-links.is-open {
-        transform: translateX(0);
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .nav-links a {
-        font-size: 0.95rem;
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        font-weight: 300;
+        color: var(--text-1);
+        text-align: center;
+        transition: opacity 0.3s var(--ease);
+    }
+    
+    .nav-links a:active {
+        opacity: 0.6;
+    }
+
+    /* Use body class to hide other elements when menu is open */
+    .menu-is-open .nav-logo,
+    .menu-is-open .nav-controls {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .nav-logo, .nav-controls {
+        transition: opacity 0.4s var(--ease);
     }
 
     .nav-hamburger {
@@ -1044,7 +1077,8 @@ header {
 
 @media (max-width: 480px) {
     .hero-headline {
-        font-size: clamp(4.5rem, 20vw, 6rem);
+        font-size: clamp(3.8rem, 18vw, 5.5rem);
+        line-height: 0.85;
     }
 
     .about-stats {

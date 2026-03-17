@@ -56,11 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
             'experience.job3.date': '2021 — 2023',
             'recognition.title': 'Impacto & Mídia',
             'recognition.nasa.title': 'NASA Space Apps Global Winner',
-            'recognition.nasa.text': 'Vencedor mundial na categoria Galactic Impact com o projeto Poseidon, uma IA para detecção de manchas de óleo via satélite.',
+            'recognition.nasa.text': 'Vencedor mundial com o projeto Poseidon, uma solução de IA que utiliza Redes Neurais Convolucionais (Deep Learning) e imagens de satélite do tipo SAR (Radar de Abertura Sintética) para identificar manchas de óleo nos oceanos mesmo através de nuvens ou à noite. Desenvolvido em resposta ao desastre ambiental de 2019 no Brasil, o sistema automatiza o monitoramento marítimo global, reduzindo drasticamente o tempo de resposta para mitigar impactos ecológicos e econômicos.',
             'recognition.ibm.title': 'C0D3RS Championship',
-            'recognition.ibm.text': 'Destaque na minissérie da IBM (Prime Video) sobre os principais desenvolvedores da América Latina resolvendo problemas globais.',
+            'recognition.ibm.text': 'Finalista representando o Brasil na minissérie exclusiva da IBM e Prime Video. Uma competição épica entre os melhores desenvolvedores da América Latina, utilizando IBM Cloud e IA para resolver problemas reais da sociedade em um formato de reality show tecnológico.',
             'recognition.media.title': 'Talks & Podcast',
             'recognition.media.text': 'Discussões na Alura, Brazil Journal e outros canais sobre IA aplicada ao ambiente e tecnologia de ponta.',
+            'recognition.talk.title': 'Jornada até a NASA',
+            'recognition.talk.text': 'Palestra completa no EducaXperience sobre tecnologia, inovação e os bastidores da vitória global.',
+            'recognition.media.video2.title': 'Inovação na Prática',
+            'recognition.media.video2.text': 'Entrevista técnica e insights sobre o desenvolvimento de produtos digitais e o ecossistema de tecnologia.',
             'contact.title': 'Entre em Contato',
             'contact.headline': 'Vamos construir<br>o próximo nível.',
             'contact.sub': 'Disponível para parcerias e projetos de alto impacto.',
@@ -101,11 +105,15 @@ document.addEventListener('DOMContentLoaded', () => {
             'experience.job3.date': '2021 — 2023',
             'recognition.title': 'Impact & Media',
             'recognition.nasa.title': 'NASA Space Apps Global Winner',
-            'recognition.nasa.text': 'Global winner in the Galactic Impact category with Project Poseidon, an AI for oil spill detection via satellite imagery.',
+            'recognition.nasa.text': 'Global winner with Project Poseidon, an AI solution using Convolutional Neural Networks (Deep Learning) and SAR (Synthetic Aperture Radar) satellite imagery to identify ocean oil spills even through clouds or at night. Developed in response to the 2019 environmental disaster in Brazil, the system automates global maritime monitoring, drastically reducing response time to mitigate ecological and economic impacts.',
             'recognition.ibm.title': 'C0D3RS Championship',
-            'recognition.ibm.text': 'Featured in the IBM miniseries (Prime Video) about top Latin American developers solving global challenges.',
+            'recognition.ibm.text': 'Finalist representing Brazil in the exclusive IBM and Prime Video miniseries. An epic competition among the best developers in Latin America, using IBM Cloud and AI to solve real-world problems in a tech reality show format.',
             'recognition.media.title': 'Talks & Podcasts',
             'recognition.media.text': 'Deep dives on Alura, Brazil Journal, and other media outlets about applied AI and cutting-edge tech.',
+            'recognition.talk.title': 'Journey to NASA',
+            'recognition.talk.text': 'Full keynote at EducaXperience about technology, innovation, and the behind-the-scenes of the global victory.',
+            'recognition.media.video2.title': 'Innovation in Practice',
+            'recognition.media.video2.text': 'Technical interview and insights on digital product development and the technology ecosystem.',
             'contact.title': 'Get in Touch',
             'contact.headline': "Let's build<br>the next level.",
             'contact.sub': 'Available for partnerships and high-impact projects.',
@@ -245,18 +253,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.getElementById('navLinks');
 
     if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            const open = navLinks.classList.toggle('is-open');
-            hamburger.classList.toggle('is-open', open);
-            hamburger.setAttribute('aria-expanded', String(open));
-        });
+        function toggleMenu(open) {
+            const isOpen = typeof open === 'boolean' ? open : !navLinks.classList.contains('is-open');
+            
+            navLinks.classList.toggle('is-open', isOpen);
+            hamburger.classList.toggle('is-open', isOpen);
+            hamburger.setAttribute('aria-expanded', String(isOpen));
+            
+            // Lock body scroll and add class for CSS styling
+            if (isOpen) {
+                document.body.style.overflow = 'hidden';
+                document.body.classList.add('menu-is-open');
+            } else {
+                document.body.style.overflow = '';
+                document.body.classList.remove('menu-is-open');
+            }
+        }
+
+        hamburger.addEventListener('click', () => toggleMenu());
 
         navLinks.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', () => {
-                navLinks.classList.remove('is-open');
-                hamburger.classList.remove('is-open');
-                hamburger.setAttribute('aria-expanded', 'false');
-            });
+            a.addEventListener('click', () => toggleMenu(false));
+        });
+        
+        // Close menu on resize if screen becomes wide
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && navLinks.classList.contains('is-open')) {
+                toggleMenu(false);
+            }
         });
     }
 
