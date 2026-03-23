@@ -52,12 +52,11 @@
 
         <!-- ══ TUNNEL PIPE ══ -->
         <g id="tunnelNode" class="tunnel-node" style="cursor:pointer">
-          <ellipse cx="205" cy="227.5" rx="8" ry="32.5" fill="#0d0d0d" stroke="rgba(255,255,255,0.20)" stroke-width="1.5" />
-          <path d="M 405 195 A 8 32.5 0 0 1 405 260" fill="none" stroke="rgba(255,255,255,0.20)" stroke-width="1.5"/>
-          <line x1="205" y1="195" x2="405" y2="195" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="205" y1="260" x2="405" y2="260" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
-          <rect class="tunnel-nbg" x="205" y="195" width="200" height="65" fill="rgba(255,255,255,0.01)" stroke="none" style="transition:fill 0.2s"/>
-
+          <ellipse cx="205" cy="227.5" rx="8" ry="32.5" style="fill: var(--bg-surface); stroke: var(--border-hover); stroke-width: 1.2;" />
+          <path d="M 405 195 A 8 32.5 0 0 1 405 260" style="fill: none; stroke: var(--border-hover); stroke-width: 0.8;" />
+          <line x1="205" y1="195" x2="405" y2="195" style="stroke: var(--border-hover); stroke-width: 0.8;"/>
+          <line x1="205" y1="260" x2="405" y2="260" style="stroke: var(--border-hover); stroke-width: 0.8;"/>
+          <rect class="tunnel-nbg" x="205" y="195" width="200" height="65" stroke="none" fill="rgba(255,255,255,0.01)" style="transition:fill 0.2s"/>
           <text x="305" y="208" class="tunnel-main-lbl" style="font-size: 10px;">Queue</text>
           <text x="395" y="210" class="nplus">+</text>
         </g>
@@ -119,12 +118,12 @@
 
         <!-- ══ NODE: Prompts ══ -->
         <g class="arch-node" data-node="prompts" transform="translate(635, 330)">
-          <rect x="6" y="-6" width="70" height="100" rx="3" fill="#0d0d0d" stroke="rgba(255,255,255,0.08)" stroke-width="1" opacity="0.4" />
-          <rect x="3" y="-3" width="70" height="100" rx="3" fill="#0d0d0d" stroke="rgba(255,255,255,0.12)" stroke-width="1" opacity="0.7" />
-          <path class="nbg" d="M 0 3 Q 0 0 3 0 L 55 0 L 70 15 L 70 97 Q 70 100 67 100 L 3 100 Q 0 100 0 97 Z" />
-          <path class="doc-fold" d="M 55 0 L 55 15 L 70 15" fill="none" stroke="var(--border)" stroke-width="1" style="transition: stroke 0.2s"/>
-          <text class="ntitle" x="35" y="55" text-anchor="middle">Prompts</text>
-          <text class="nplus" x="60" y="90">+</text>
+          <rect class="prompts-shadow" x="6" y="-6" width="155" height="100" rx="3" opacity="0.4" />
+          <rect class="prompts-shadow" x="3" y="-3" width="155" height="100" rx="3" opacity="0.7" />
+          <path class="nbg" d="M 0 3 Q 0 0 3 0 L 125 0 L 155 30 L 155 97 Q 155 100 152 100 L 3 100 Q 0 100 0 97 Z" />
+          <path class="doc-fold" d="M 125 0 L 125 30 L 155 30" fill="none" stroke="var(--border)" stroke-width="1" style="transition: stroke 0.2s"/>
+          <text class="ntitle" x="77.5" y="55" text-anchor="middle">Prompts</text>
+          <text class="nplus" x="140" y="90">+</text>
         </g>
 
         <!-- ══ NODE: Monitoring ══ -->
@@ -137,18 +136,18 @@
           <text x="90" y="13" text-anchor="middle" style="font-size:8px; letter-spacing: 0.12em; text-transform: uppercase; fill: #666; font-weight: 500;">Observability</text>
           <circle cx="168" cy="11" r="1.8" fill="#27c93f"><animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/></circle>
           <g transform="translate(8, 30)">
-            <rect width="52" height="20" rx="2" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.05)"/>
+            <rect class="monitor-card" width="52" height="20" rx="2"/>
             <text x="4" y="8" style="font-size:5px; fill:#666; text-transform:uppercase;">Latência</text>
             <text x="4" y="16" style="font-size:7px; fill:#e8960a; font-weight:600;">24ms</text>
-            <rect x="56" width="52" height="20" rx="2" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.05)"/>
+            <rect class="monitor-card" x="56" width="52" height="20" rx="2"/>
             <text x="60" y="8" style="font-size:5px; fill:#666; text-transform:uppercase;">Token/s</text>
             <text x="60" y="16" style="font-size:7px; fill:#4ade80; font-weight:600;">85.2</text>
-            <rect x="112" width="52" height="20" rx="2" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.05)"/>
+            <rect class="monitor-card" x="112" width="52" height="20" rx="2"/>
             <text x="116" y="8" style="font-size:5px; fill:#666; text-transform:uppercase;">Sucesso</text>
             <text x="116" y="16" style="font-size:7px; fill:#5bbfef; font-weight:600;">99.9%</text>
           </g>
           <g transform="translate(8, 56)">
-             <rect width="164" height="54" rx="3" fill="rgba(0,0,0,0.6)" stroke="rgba(255,255,255,0.03)" />
+             <rect class="monitor-chart" width="164" height="54" rx="3" />
              <line x1="0" y1="18" x2="164" y2="18" stroke="rgba(255,255,255,0.02)" stroke-width="0.5" />
              <line x1="0" y1="36" x2="164" y2="36" stroke="rgba(255,255,255,0.02)" stroke-width="0.5" />
              <polyline points="5,45 15,40 30,48 45,35 60,42 75,25 90,40 105,15 120,45 135,38 150,48 160,42" fill="none" stroke="#e8960a" stroke-width="1.2" stroke-linejoin="round" />
@@ -237,9 +236,16 @@
   stroke-width: 1;
   transition: stroke 0.2s, filter 0.2s;
 }
-.nbg-ai { fill: #0d0d0d; stroke: rgba(255,255,255,0.1); }
-.cyl-lid { fill: #111; stroke: var(--border); stroke-width: 1; transition: stroke 0.2s, fill 0.2s; }
+.nbg-ai { fill: var(--bg-surface); stroke: var(--border); }
+.cyl-lid { fill: var(--bg-surface); stroke: var(--border); stroke-width: 1; transition: stroke 0.2s, fill 0.2s; }
 .doc-fold { fill: none; stroke: var(--border); stroke-width: 1; transition: stroke 0.2s; }
+
+/* Theme-aware SVG component classes */
+.tunnel-pipe-body { fill: var(--bg-surface); stroke: var(--border); stroke-width: 1.5; }
+.tunnel-pipe-border { fill: none; stroke: var(--border); stroke-width: 1; opacity: 0.5; }
+.prompts-shadow { fill: var(--bg-elevated); stroke: var(--border); stroke-width: 1; }
+.monitor-card { fill: var(--bg-elevated); stroke: var(--border); stroke-width: 0.5; }
+.monitor-chart { fill: var(--bg-surface); stroke: var(--border); stroke-width: 0.5; }
 
 .arch-node:hover .nbg, .arch-node:hover .cyl-lid, .arch-node:hover .doc-fold { stroke: var(--border-hover); }
 .arch-node.open .nbg, .arch-node.open .cyl-lid, .arch-node.open .doc-fold {
@@ -247,9 +253,17 @@
   filter: drop-shadow(0 0 8px rgba(201,169,110,0.15));
 }
 
-/* Light mode overrides */
-[data-theme="light"] .cyl-lid { fill: #2a2a2a; }
-[data-theme="light"] .tunnel-main-lbl { fill: rgba(0,0,0,0.35); }
+/* Light mode — darker borders for all SVG nodes */
+[data-theme="light"] .nbg,
+[data-theme="light"] .cyl-lid,
+[data-theme="light"] .doc-fold,
+[data-theme="light"] .tunnel-pipe-body,
+[data-theme="light"] .tunnel-pipe-border,
+[data-theme="light"] .monitor-card,
+[data-theme="light"] .monitor-chart,
+[data-theme="light"] .prompts-shadow { stroke: var(--border-hover); }
+
+[data-theme="light"] .tunnel-main-lbl { fill: rgba(0,0,0,0.45); }
 [data-theme="light"] .elbl.gy { fill: #666; }
 
 .ntitle {
@@ -260,7 +274,7 @@
   dominant-baseline: middle;
   pointer-events: none;
 }
-.ntitle-ai { fill: #fff; font-size: 11px; }
+.ntitle-ai { fill: var(--text-1); font-size: 11px; }
 .nplus {
   font-size: 15px;
   fill: var(--text-2);
