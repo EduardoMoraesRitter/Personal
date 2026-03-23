@@ -20,33 +20,20 @@ import AIChatWidget from './AIChatWidget.astro';
       <!-- headline + AI widget (lado a lado) -->
       <div class="hero-center-row">
         <h1 class="hero-headline">
-          <span class="headline-line">Eduardo</span>
-          <span class="headline-line">Ritter</span>
+          <span class="headline-line"><span class="code-bracket">&lt;</span>Eduardo</span>
+          <span class="headline-line">Ritter<span class="code-bracket">/&gt;</span></span>
         </h1>
 
         <!-- AI Chat Widget inline -->
         <div class="hero-ai-slot">
-          <p class="hero-ai-label">
-            <span class="hero-ai-label-dot"></span>
-            <span data-i18n="hero.aiLabel">Converse com minha IA</span>
-          </p>
+          <!-- Label removida conforme pedido pelo usuário -->
           <AIChatWidget />
         </div>
       </div>
 
       <div class="hero-bottom">
         <div class="hero-content-block">
-          <p class="hero-sub" data-i18n="hero.sub">
-            Projetando o futuro com IA Generativa<br>e arquiteturas escaláveis.
-          </p>
-          <div class="hero-actions">
-            <a href="#contact" class="btn-outline">
-              <span data-i18n="hero.cta">Vamos Conversar</span>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M1 6h10M6 1l5 5-5 5"/>
-              </svg>
-            </a>
-          </div>
+          <!-- Tagline removida deste local para melhor fluxo visual conforme pedido -->
         </div>
 
         <div class="scroll-hint">
@@ -88,33 +75,7 @@ import AIChatWidget from './AIChatWidget.astro';
     max-width: 520px;
   }
 
-  /* Small label above the input */
-  .hero-ai-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-body);
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(201, 169, 110, 0.7);
-  }
-
-  .hero-ai-label-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #4ade80;
-    box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
-    animation: labelDotPulse 2s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes labelDotPulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.5; transform: scale(0.7); }
-  }
+  /* Removed .hero-ai-label and labelDotPulse animations */
 
   /* ─── Responsive: stack on mobile ─── */
   @media (max-width: 900px) {
