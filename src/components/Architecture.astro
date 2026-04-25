@@ -161,9 +161,11 @@
       <div id="archModal" class="tunnel-modal" aria-hidden="true">
         <button class="tmodal-close" id="archModalClose">&times;</button>
         <div class="tmodal-inner">
-          <div class="tmodal-icon" id="archModalIcon">⌁</div>
-          <div class="tmodal-content">
+          <div class="tmodal-header">
+            <div class="tmodal-icon" id="archModalIcon">⌁</div>
             <h4 class="tmodal-title" id="archModalTitle">Título</h4>
+          </div>
+          <div class="tmodal-content">
             <p class="tmodal-desc" id="archModalDesc">Descrição</p>
             <div class="tmodal-tags" id="archModalTags"></div>
           </div>
@@ -290,37 +292,235 @@
 .elbl.gy { fill: #888; }
 .elbl.ev { fill: #a3cfff; }
 .elbl.gr { fill: #4ade80; }
+</style>
 
-/* Modal */
+<style is:global>
+/* Modal (Global para renderizar conteúdo dinâmico do JS) */
 .tunnel-modal {
-  position: absolute;
-  top: 35%;
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, 0) scale(0.96);
-  width: min(480px, 90%);
+  transform: translate(-50%, -50%) scale(0.96);
+  width: min(960px, 95vw);
+  max-height: 75vh;
+  overflow-y: auto;
   background: var(--bg-surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 16px;
+  padding: 2rem;
   opacity: 0;
   pointer-events: none;
   transition: all 0.3s var(--ease);
-  z-index: 100;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+  z-index: 9999;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.8);
 }
-.tunnel-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, 0) scale(1); }
-.tmodal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-3); font-size: 1.6rem; cursor: pointer; }
-.tmodal-inner { display: flex; gap: 1.5rem; }
-.tmodal-icon { font-size: 2.2rem; opacity: 0.3; }
-.tmodal-title { font-family: var(--font-display); font-size: 1.5rem; color: var(--text-1); margin-bottom: 0.5rem; }
-.tmodal-desc { font-size: 0.85rem; color: var(--text-2); line-height: 1.7; margin-bottom: 1.2rem; }
-.tmodal-tag { border: 1px solid var(--border); background: var(--bg-elevated); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.7rem; color: var(--text-2); margin: 0 4px 4px 0; display: inline-block; }
+
+@media (max-width: 768px) {
+  .tunnel-modal {
+    padding: 1.5rem;
+    max-height: 85vh;
+  }
+}
+
+/* Ocultando Barra de Rolagem Visual */
+.tunnel-modal {
+  scrollbar-width: none; /* Firefox */
+}
+.tunnel-modal::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.tunnel-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+.tmodal-close { position: absolute; z-index: 100; top: 1.5rem; right: 1.5rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-2); font-size: 1.6rem; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+.tmodal-close:hover { background: var(--border-hover); color: var(--text-1); transform: rotate(90deg); }
+.tmodal-inner { display: flex; flex-direction: column; gap: 0.5rem; }
+.tmodal-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem; }
+.tmodal-icon { font-size: 2.2rem; opacity: 0.7; }
+.tmodal-title { font-family: var(--font-display); font-size: 1.8rem; color: var(--text-1); margin: 0; }
+.tmodal-desc { font-size: 1.05rem; color: var(--text-2); line-height: 1.6; margin-bottom: 1.5rem; }
+.tmodal-tag { border: 1px solid var(--border); background: var(--bg-elevated); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-2); margin: 0 6px 6px 0; display: inline-block; font-weight: 500; }
+
+/* Channel Cards Grid */
+.channels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.channel-card {
+  background: rgba(255,255,255,0.015);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.channel-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.03);
+}
+.channel-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text-1);
+}
+.channel-icon {
+  font-size: 2.2rem;
+  background: var(--bg-elevated);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.channel-card-content {
+  font-size: 0.95rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.channel-card-content h5 {
+  color: var(--text-1);
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 0.3rem;
+}
+.channel-card-content ul {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+.channel-card-content li {
+  margin-bottom: 0.5rem;
+}
+.wa-reference {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+.wa-reference a {
+  transition: opacity 0.2s;
+}
+.wa-reference a:hover {
+  opacity: 0.8;
+  text-decoration: underline !important;
+}
 </style>
 
 <script>
   const nodeData = {
     'tunnel': { icon: '⌁', title: 'Túnel de Comunicação', desc: 'Camada responsável por <strong>receber, validar e enfileirar</strong> mensagens.', tags: ['API Gateway', 'SQS', 'Rate Limit'] },
-    'channels': { icon: '💬', title: 'Channels', desc: 'Entrada unificada para WhatsApp, Instagram, Webchat.', tags: ['WhatsApp', 'Omnichannel'] },
+    'channels': { 
+      icon: '💬', 
+      title: 'Channels Integrados', 
+      desc: `
+        <p>Entrada unificada da nossa arquitetura Omnichannel. Aqui definimos como a IA se conecta com o mundo externo.</p>
+        <div class="channels-grid">
+          
+          <!-- WHATSAPP CARD -->
+          <div class="channel-card">
+            <div class="channel-card-header">
+              <span class="channel-icon">📱</span> WhatsApp
+            </div>
+            <div class="channel-card-content">
+              <p>Envio direto através da <strong>WhatsApp Cloud API (Meta)</strong>.</p>
+              
+              <h5>Validação e Limites (Rate Limits)</h5>
+              <ul>
+                <li>Necessário aprovação da WABA. A operação é controlada por <strong>Tiers de limite de mensagens</strong> (ex: 1k, 10k/dia).</li>
+              </ul>
+              
+              <h5>Anti-Spam e "Cauda Longa"</h5>
+              <ul>
+                <li>A Meta monitora a taxa de leitura e bloqueio. Disparar muitas mensagens de Marketing idênticas reduz sua Qualidade de Número.</li>
+                <li><strong>Dica:</strong> Use a estratégia de "Cauda Longa" nos templates. Varie os modelos e crie uma cadência suave para evitar ser pego pelos filtros de spam do Facebook.</li>
+              </ul>
+              
+              <h5>Webhooks & Templates</h5>
+              <ul>
+                <li>Webhook rastreia recibos assíncronos (<em>Sent, Delivered, Read, Failed</em>).</li>
+                <li>Templates têm 3 categorias oficiais: <strong>Marketing</strong>, <strong>Utility</strong> e <strong>Authentication</strong>.</li>
+              </ul>
+              
+              <div class="wa-reference">
+                * Referências (Meta): <br>
+                <a href="https://developers.facebook.com/docs/whatsapp/messaging-limits" target="_blank" style="color:var(--accent); text-decoration:none;">Messaging Limits & Quality</a> | 
+                <a href="https://developers.facebook.com/docs/whatsapp/cloud-api/guides/send-message-templates" target="_blank" style="color:var(--accent); text-decoration:none;">Templates</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- INSTAGRAM CARD -->
+          <div class="channel-card">
+            <div class="channel-card-header">
+              <span class="channel-icon">📸</span> Instagram
+            </div>
+            <div class="channel-card-content">
+              <p>Integração via <strong>Messenger API for Instagram</strong>.</p>
+              
+              <h5>Conexão e Webhooks</h5>
+              <ul>
+                <li>Para funcionar, o sistema assina um <strong>Webhook no App Dashboard</strong> da Meta para escutar os eventos do app.</li>
+                <li>Escuta ativamente eventos como <code>messages</code> (para DMs) e <code>messaging_postbacks</code> (interações).</li>
+              </ul>
+              
+              <h5>Funcionalidades</h5>
+              <ul>
+                <li>Respostas a Directs e menções em Stories.</li>
+                <li>Janela estrita de <strong>24 horas</strong> para responder organicamente.</li>
+              </ul>
+
+              <div class="wa-reference">
+                * Referências (Meta): <br>
+                <a href="https://developers.facebook.com/docs/messenger-platform/instagram/features/webhook" target="_blank" style="color:var(--accent); text-decoration:none;">Instagram Webhooks API</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- WEBCHAT CARD -->
+          <div class="channel-card">
+            <div class="channel-card-header">
+              <span class="channel-icon">🌐</span> Webchat
+            </div>
+            <div class="channel-card-content">
+              <p>Interface web acoplada (Widget/SPA) com máximo controle.</p>
+              
+              <h5>Conexão via Socket.IO</h5>
+              <ul>
+                <li>A comunicação ocorre via <strong>Socket.IO</strong> (WebSockets), garantindo latência quase zero e conexões persistentes.</li>
+              </ul>
+
+              <h5>Garantia de Leitura (Acknowledgements)</h5>
+              <ul>
+                <li>Para simular os "risquinhos azuis" do WA, usamos os <em>callbacks/acknowledgements</em> do Socket.IO. O client dispara um retorno assim que renderiza a mensagem, e o servidor sabe que foi entregue e lida nas duas pontas.</li>
+              </ul>
+
+              <h5>Leitura do DOM (Contexto Ativo)</h5>
+              <ul>
+                <li>Vantagem exclusiva: A IA tem acesso ao <strong>HTML/DOM da página</strong>.</li>
+                <li>O script sabe em qual tela o usuário está, onde clicou e o que digitou. Esse contexto é enviado via Socket antes da mensagem do usuário chegar à IA.</li>
+              </ul>
+
+              <div class="wa-reference">
+                * Referências: <br>
+                <a href="https://socket.io/docs/v4/emitting-events/#acknowledgements" target="_blank" style="color:var(--accent); text-decoration:none;">Socket.IO: Acknowledgements</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      `, 
+      tags: ['Cloud API', 'Socket.IO', 'Meta Webhooks', 'DOM Context'] 
+    },
     'ai': { icon: '🧠', title: 'AI Engine', desc: 'O núcleo de inteligência da arquitetura.', tags: ['LLM', 'Claude 3.5'] },
     'base': { icon: '📚', title: 'Knowledge Base', desc: 'Busca semântica via RAG.', tags: ['Vector DB', 'Pinecone'] },
     'tools': { icon: '🔧', title: 'Tools', desc: 'Habilidades e conexões externas.', tags: ['APIs', 'Functions'] },
@@ -378,5 +578,20 @@
   archModalClose.addEventListener('click', closeModal);
   const archSvg = document.getElementById('archSvg');
   if (archSvg) archSvg.addEventListener('click', closeModal);
+
+  // Fecha ao clicar do lado de fora do modal
+  document.addEventListener('click', e => {
+    // Só fecha se estiver aberto, se o clique não for dentro do modal, 
+    // e se o clique não for nos botões que ABREM o modal.
+    if (
+      archModal.classList.contains('open') && 
+      !archModal.contains(e.target) && 
+      !e.target.closest('.arch-node') && 
+      !e.target.closest('#tunnelNode')
+    ) {
+      closeModal();
+    }
+  });
+
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
